@@ -1,0 +1,50 @@
+<template>
+    <div class="wrapper">
+    <!--
+        <lightning-tabset>
+            <lightning-tab label="Example">
+                One Content
+            </lightning-tab>
+            <lightning-tab label="Documentation">
+                Two Content 
+            </lightning-tab>
+            <lightning-tab label="Specification">
+                Three Content 
+            </lightning-tab>
+        </lightning-tabset>
+    -->
+    <!--
+        <div class="slds-tabs_default">
+            <ul class="slds-tabs_default__nav" role="tablist">
+                <li class="slds-tabs_default__item tab__items slds-is-active" title="Item One" role="presentation">
+                    <a class="slds-tabs_default__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab__item-one">Item One</a>
+                </li>
+                <li class="slds-tabs_default__item tab__items" title="Item Two" role="presentation">
+                    <a class="slds-tabs_default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab__item-two">Item Two</a>
+                </li>
+                <li class="slds-tabs_default__item tab__items" title="Item Three" role="presentation">
+                    <a class="slds-tabs_default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="tab__item-three">Item Three</a>
+                </li>
+            </ul>
+            <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">Item One Content</div>
+            <div id="tab-default-2" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">Item Two Content</div>
+            <div id="tab-default-3" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">Item Three Content</div>
+        </div>
+    -->
+    <div class="slds-tabs_default">
+        <ul class="slds-tabs_default__nav" role="tablist">
+            <template for:each={tabs} for:item="item">
+                <li key={item.value} class={tabItemClass} title={item.label} role="presentation">
+                    <a onclick={handleTabClick} data-tab-id={item.value} class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex={tabIndex} aria-selected={isSelected} aria-controls={item.value} id={item.value}>{item.label}</a>
+                </li>
+            </template>
+        </ul>
+        <template for:each={tabs} for:item="item">
+            <div key={item.value} id={item.value} class={tabContentClass} role="tabpanel" aria-labelledby={item.value}>{item.content}</div>
+        </template>
+    </div>
+
+
+
+    </div>
+</template>
