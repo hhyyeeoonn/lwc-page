@@ -1,4 +1,5 @@
-import { LightningElement } from 'lwc';
+import { LightningElement } from 'lwc'
+import { NavigationMixin } from 'lightning/navigation';
 
 export default class NaviComponent extends NavigationMixin(LightningElement) {
 
@@ -6,15 +7,11 @@ export default class NaviComponent extends NavigationMixin(LightningElement) {
     namedPageUrl;
 
     async connectedCallback() {
-        let result = await getSearchList();
-        console.log('result:', JSON.parse(JSON.stringify(result)));
-        
-        this.resultList = result;
-        
+    
         this.namedPageRef = {
             type : 'comm__namedPage',
             attributes : {
-                name : 'cafe__c'
+                name : 'PickList__c'
             },
         }
 
@@ -25,16 +22,16 @@ export default class NaviComponent extends NavigationMixin(LightningElement) {
     }
 
     // 페이지 이동하기 NavigationMixin.Navigate : 페이지로 이동
-    navigateToCafePage() {
+    navigateToInput() {
         this[NavigationMixin.Navigate]({
             type : 'comm__namedPage',
             attributes : {
-                name : 'cafe__c'
+                name : 'Home'
             },
         });
     }
 
-    clickCafe() {
+    clickPickList() {
         //location.href = this.namedPageUrl; 페이지가 새로고침됨
         this[NavigationMixin.Navigate](this.namedPageRef);
 
