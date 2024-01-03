@@ -1,9 +1,32 @@
 <template>
     <div class="wrapper">
-    <!--
         <lightning-tabset>
             <lightning-tab label="Example">
-                One Content
+                <lightning-combobox
+                    name="combobox"
+                    label="Example"
+                    value={value}
+                    options={options}
+                    onchange={handleChange}>
+                </lightning-combobox>
+
+                <div>
+                    <template lwc:if={textInputDefault}>
+                        <div class="slds-p-around_medium lgc-bg" >
+                            <lightning-input type="text" label="Enter some text"></lightning-input>
+                            <p>textInputDefault</p>
+                        </div>
+                    </template>
+                    <template lwc:elseif={textInputAdvanced}>
+                        <div class="slds-p-around_medium lgc-bg">
+                            <lightning-input type="text" label="Enter some text" onfocus={handleInputFocus} onblur={handleInputBlur}></lightning-input>
+                            <p>textInputAdvanced</p>
+                        </div>
+                    </template>
+                    <template lwc:elseif={dateInput}>
+                        <p>dateInput</p>
+                    </template>
+                </div>
             </lightning-tab>
             <lightning-tab label="Documentation">
                 Two Content 
@@ -12,7 +35,9 @@
                 Three Content 
             </lightning-tab>
         </lightning-tabset>
-    -->
+
+
+
     <!--
         <div class="slds-tabs_default">
             <ul class="slds-tabs_default__nav" role="tablist">
@@ -31,6 +56,7 @@
             <div id="tab-default-3" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">Item Three Content</div>
         </div>
     -->
+    <!--
     <div class="slds-tabs_default">
         <ul class="slds-tabs_default__nav" role="tablist">
             <template for:each={tabs} for:item="item">
@@ -44,7 +70,7 @@
         </template>
     </div>
 
-
+    -->
 
     </div>
 </template>
