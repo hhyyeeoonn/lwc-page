@@ -1,9 +1,12 @@
 <template>
-    <div>
-        <lightning-button variant="neutral" label="이동하기" onclick={navigateToInput}>이동하기</lightning-button>
-    </div>
-    <div>
-        <lightning-button variant="neutral" label="이동하기2" onclick={clickPickList}>이동하기2</lightning-button>
-       
+    <div style="width: 320px;">
+        <lightning-vertical-navigation selected-item="Lightning Web Component" compact>
+            <lightning-vertical-navigation-section label="Lightning">
+                <lightning-vertical-navigation-item label="input" name="input" onclick={navigateToInput}></lightning-vertical-navigation-item>
+                <lightning-vertical-navigation-item label="picklist" name="picklist" onclick={clickPickList}></lightning-vertical-navigation-item>
+                <lightning-vertical-navigation-item label="radio" name="radio" onclick={navigateToRadio}></lightning-vertical-navigation-item>
+                <lightning-vertical-navigation-item label="chechbox" name="checkbox" onclick={navigateToCheckbox}></lightning-vertical-navigation-item>
+            </lightning-vertical-navigation-section>
+        </lightning-vertical-navigation>
     </div>
 </template>

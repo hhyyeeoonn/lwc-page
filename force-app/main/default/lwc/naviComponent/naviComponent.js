@@ -18,7 +18,6 @@ export default class NaviComponent extends NavigationMixin(LightningElement) {
         
         // 페이지 이동하기 NavigationMixin.GenerateUrl : url 생성됨
         this[NavigationMixin.GenerateUrl](this.namedPageRef).then((url) => (this.namedPageUrl = url));
-        console.log('this.namedPageUrl: ' + this.namedPageUrl);
     }
 
     // 페이지 이동하기 NavigationMixin.Navigate : 페이지로 이동
@@ -35,6 +34,24 @@ export default class NaviComponent extends NavigationMixin(LightningElement) {
         //location.href = this.namedPageUrl; 페이지가 새로고침됨
         this[NavigationMixin.Navigate](this.namedPageRef);
 
+    }
+
+    navigateToRadio() {
+        this[NavigationMixin.Navigate]({
+            type : 'comm__namedPage',
+            attributes : {
+                name : 'RadioGroup__c'
+            },
+        })
+    }
+
+    navigateToCheckbox() {
+        this[NavigationMixin.Navigate]({
+            type : 'comm__namedPage',
+            attributes : {
+                name : 'CheckboxGroup__c'
+            },
+        })
     }
 
 }

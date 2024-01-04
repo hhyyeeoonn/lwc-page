@@ -33,11 +33,15 @@ export default class InputPage extends LightningElement {
     }
    */
 
-    @track value = 'textInputDefault';
+    value = 'textInputDefault';
 
-    @track textInputDefault = true;
-    @track textInputAdvanced = false;
-    @track dateInput = false;
+    textInputDefault = true;
+    textInputAdvanced = false;
+    dateInput = false;
+
+    textValue = '';
+    dateValue;
+    textValueField = '';
 
     get options() {
         return [
@@ -49,23 +53,37 @@ export default class InputPage extends LightningElement {
 
     handleChange(e) {
         this.value = e.detail.value;
-        if(this.value === 'textInputDefault') {
-            this.textInputDefault = true;
-            this.textInputAdvanced = false;
-            this.dateInput = false;
-        } else if(this.value === 'textInputAdvanced') {
-            this.textInputDefault = false;
-            this.textInputAdvanced = true;
-            this.dateInput = false;
-        } else {
-            this.textInputDefault = false;
-            this.textInputAdvanced = false;
-            this.dateInput = true;
+
+        switch(this.value) {
+            case 'textInputDefault':
+                this.textInputDefault = true;
+                this.textInputAdvanced = false;
+                this.dateInput = false;
+                break;
+
+            case 'textInputAdvanced':
+                this.textInputDefault = false;
+                this.textInputAdvanced = true;
+                this.dateInput = false;
+                this.textValueField = '';
+                break;
+
+            case 'dateInput':
+                this.textInputDefault = false;
+                this.textInputAdvanced = false;
+                this.dateInput = true;
+                break;
         }
     }
 
-    
+    handleInputBlur(e) {
+        this.textValue = e.target.value;
+        
+        if(this.textInputAdvanced) this.textValueField = this.textValue; 
+        else this.textValueField = '';
 
-    
+        console.log(':::::textValue: ' + this.textValue + ':::::');
+    }
+
 }
 
