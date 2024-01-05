@@ -1,0 +1,14 @@
+.wrapper {
+    background-color: #ffffff;
+}
+.container-combobox {
+    display: flex;
+}
+.wrap-combobox {
+    flex-basis: 30%;
+    margin-right: auto;
+    margin-left: 15px;
+}
+.wrap-example {
+    border-top: 1px solid lightgray;
+}

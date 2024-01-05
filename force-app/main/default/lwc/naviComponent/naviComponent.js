@@ -1,10 +1,22 @@
-import { LightningElement } from 'lwc'
+import { LightningElement, wire } from 'lwc'
 import { NavigationMixin } from 'lightning/navigation';
+import COMPONENT_EXAMPLE from "@salesforce/messageChannel/LWC_Standard_Components__c";
+import { publish, MessageContext } from 'lightning/messageService';
 
 export default class NaviComponent extends NavigationMixin(LightningElement) {
+    @wire(MessageContext) messageContext;
 
     namedPageRef;
     namedPageUrl;
+    
+    handleMessage(page) {
+        let message = {
+            pageName : page
+        };
+        console.log(message.pageName);
+        publish(this.messageContext, COMPONENT_EXAMPLE, message);
+    }
+
 
     async connectedCallback() {
     
@@ -31,9 +43,9 @@ export default class NaviComponent extends NavigationMixin(LightningElement) {
     }
 
     clickPickList() {
+        this.handleMessage('picklist');
         //location.href = this.namedPageUrl; 페이지가 새로고침됨
         this[NavigationMixin.Navigate](this.namedPageRef);
-
     }
 
     navigateToRadio() {
@@ -45,7 +57,8 @@ export default class NaviComponent extends NavigationMixin(LightningElement) {
         })
     }
 
-    navigateToCheckbox() {
+    navigateToCheckbox(e) {
+        this.pageName = 'checkbox';
         this[NavigationMixin.Navigate]({
             type : 'comm__namedPage',
             attributes : {
