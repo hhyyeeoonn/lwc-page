@@ -1,12 +1,14 @@
 <template>
-    <div style="width: 320px;">
-        <lightning-vertical-navigation selected-item="Lightning Web Component" compact>
-            <lightning-vertical-navigation-section label="Lightning">
-                <lightning-vertical-navigation-item label="input" name="input" value={pageName} onclick={navigateToInput}></lightning-vertical-navigation-item>
-                <lightning-vertical-navigation-item label="picklist" name="picklist" onclick={clickPickList}></lightning-vertical-navigation-item>
-                <lightning-vertical-navigation-item label="radio" name="radio" onclick={navigateToRadio}></lightning-vertical-navigation-item>
-                <lightning-vertical-navigation-item label="chechbox" name="checkbox" onclick={navigateToCheckbox}></lightning-vertical-navigation-item>
-            </lightning-vertical-navigation-section>
-        </lightning-vertical-navigation>
+    <div class="wrapper">
+        <div class="wrap-navigation">
+            <lightning-vertical-navigation selected-item="inputType" compact>
+                <lightning-vertical-navigation-section label="Lightning">
+                    <lightning-vertical-navigation-item label="input" name="inputType" value={pageName} onclick={navigateToInput}></lightning-vertical-navigation-item>
+                    <lightning-vertical-navigation-item label="picklist" name="picklistType" onclick={clickPickList}></lightning-vertical-navigation-item>
+                    <lightning-vertical-navigation-item label="radio" name="radioType" onclick={navigateToRadio}></lightning-vertical-navigation-item>
+                    <lightning-vertical-navigation-item label="checkbox" name="checkboxType" onclick={navigateToCheckbox}></lightning-vertical-navigation-item>
+                </lightning-vertical-navigation-section>
+            </lightning-vertical-navigation>
+        </div>
     </div>
 </template>
