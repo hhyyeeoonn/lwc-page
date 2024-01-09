@@ -9,7 +9,7 @@
                             label="Example"
                             value={value}
                             options={options}
-                            onchange={handleChange}>
+                            onchange={handleOptionChange}>
                         </lightning-combobox>
                     </div>
                 </div>
@@ -20,9 +20,20 @@
                     <template lwc:if={inputType}>
                         <div class="wrap-example">
                             <template lwc:if={inputOptions.textInputDefault}>    
+                            <!--
                                 <div class="slds-p-around_medium lgc-bg">
                                     <lightning-input type="text" label="Enter some text" onblur={handleInputBlur}></lightning-input>
                                 </div>
+                            -->
+                                <template for:each={exampleValue} for:item="item" for:index="index">
+                                    <div key={item.id} class={item.class}>
+                                        <lightning-input type={item.type} label={item.label} 
+                                                        value={item.value} placeholder={item.placeholder} 
+                                                        required={item.required} disabled={item.disabled}
+                                                        read-only={item.readonly}
+                                                        onblur={item.onblur}></lightning-input>
+                                    </div>
+                                </template>
                             </template>
                             <template lwc:elseif={inputOptions.textInputAdvanced}>
                                 <div class="slds-p-around_medium lgc-bg">

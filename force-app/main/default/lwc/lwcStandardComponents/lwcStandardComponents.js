@@ -7,7 +7,7 @@ export default class LwcStandardComponents extends LightningElement {
     messageContext;
 
     subscription = null;
-    pageName = '';
+    pageName = ''; //네비 선택시 넘어오는 페이지 값
     value = '';
 
     inputOptions = {
@@ -44,16 +44,16 @@ export default class LwcStandardComponents extends LightningElement {
     checkboxType = false;
     prevType = '';
 
-    connectedCallback() {
+    connectedCallback () {
         this.pageName = 'inputType';
-        this.handleType(this.pageName);
-        this.handleSubscribe();
+        this.handleType (this.pageName);
+        this.handleSubscribe ();
     }
 
     handleSubscribe () {
         
         if (this.subscription) {
-            console.log ('***fail');
+            console.log ('*** fail');
             return;
         }
 
@@ -63,7 +63,7 @@ export default class LwcStandardComponents extends LightningElement {
             this.handleType(this.pageName);
             console.log ('*** message.pageName : ' + message.pageName);
             console.log ('*** this.prevType : ' + this.prevType);
-            console.log('*** this.value : ' + this.value);
+            console.log ('*** this.value : ' + this.value);
             
         });
     }
@@ -71,13 +71,14 @@ export default class LwcStandardComponents extends LightningElement {
     // 네비게이션바 조작
     handleType (pageType) {
 
+        this.inputType = pageType === 'inputType';
+        this.picklistType = pageType === 'picklistType';
+        this.radioType = pageType === 'radioType';
+        this.checkboxType = pageType === 'checkboxType';
+
+        //타입이 선택되면 기본으로 보여질 값
         switch (pageType) {
             case 'inputType':
-                this.inputType = true;
-                this.picklistType = false;
-                this.radioType = false;
-                this.checkboxType = false;
-
                 if (this.prevType !== 'inputType') {
                     this.value = 'textInputDefault';
                     this.inputOptions = {
@@ -89,10 +90,6 @@ export default class LwcStandardComponents extends LightningElement {
                 break;
             
             case 'picklistType':
-                this.inputType = false;
-                this.picklistType = true;
-                this.radioType = false;
-                this.checkboxType = false;
                 if (this.prevType !== 'picklistType') {
                     this.value = 'picklist';
                     this.picklistOptions = {
@@ -104,10 +101,6 @@ export default class LwcStandardComponents extends LightningElement {
                 break;
             
             case 'radioType':
-                this.inputType = false;
-                this.picklistType = false;
-                this.radioType = true;
-                this.checkboxType = false;
                 if (this.prevType !== 'radioType') {
                     this.value = 'radio';
                     this.radioOptions = {
@@ -119,10 +112,6 @@ export default class LwcStandardComponents extends LightningElement {
                 break;
 
             case 'checkboxType':
-                this.inputType = false;
-                this.picklistType = false;
-                this.radioType = false;
-                this.checkboxType = true;
                 if(this.prevType !== 'checkboxType') {
                     this.value = 'checkbox';
                     this.checkboxOptions = {
@@ -165,121 +154,47 @@ export default class LwcStandardComponents extends LightningElement {
         }
     }
 
+    textInputDefaultValue = [
+        {id : 1, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : '', placeholder : '', required : '', disabled : '', onblur : '{handleInputBlur}'},
+        {id : 2, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : 'Input Text!', onblur : '{handleInputBlur}'},
+        {id : 3, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', placeholder : 'type here', onblur : '{handleInputBlur}'},
+        {id : 4, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', placeholder : 'type here', required : 'required', onblur : '{handleInputBlur}'},
+        {id : 5, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', placeholder : 'type here', disabled : 'disabled'},
+        {id : 6, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : 'DK BMC', readonly : 'readonly'},
+    ]; 
+
+
+    get exampleValue () {
+        if (this.value === 'textInputDefault') {
+            return this.textInputDefaultValue;
+        } 
+    }
+
 // 옵션 선택시 하단 내용 변경
-    handleChange (e) {
+    handleOptionChange (e) {
         this.value = e.detail.value;
         console.log ('*** this.value2 : ' + this.value);
         
-        switch (this.value) {
-            case 'textInputDefault':
-                this.inputOptions = {
-                    textInputDefault : true,
-                    textInputAdvanced : false,
-                    dateInput : false,
-                }
-                this.textValueField = '';
-                break;
+        this.inputOptions.textInputDefault = this.value === 'textInputDefault';
+        this.inputOptions.textInputAdvanced = this.value === 'textInputAdvanced';
+        this.inputOptions.dateInput = this.value === 'dateInput';
+
+        if(this.value === 'textInputDefault' || this.value === 'textInputAdvanced') this.textValueField = '';
+
+        this.picklistOptions.picklist = this.value === 'picklist';
+        this.picklistOptions.picklist2 = this.value === 'picklist2';
+        this.picklistOptions.picklist3 = this.value === 'picklist3';
+
+        this.radioOptions.radio = this.value === 'radio';
+        this.radioOptions.radio2 = this.value === 'radio2';
+        this.radioOptions.radio3 = this.value === 'radio3';
+
+        this.checkboxOptions.checkbox = this.value === 'checkbox';
+        this.checkboxOptions.checkbox2 = this.value === 'checkbox2';
+        this.checkboxOptions.checkbox3 = this.value === 'checkbox3';
         
-            case 'textInputAdvanced':
-                this.inputOptions = {
-                    textInputDefault : false,
-                    textInputAdvanced : true,
-                    dateInput : false,
-                }
-                this.textValueField = '';
-                break;
-            
-            case 'dateInput':
-                this.inputOptions = {
-                    textInputDefault : false,
-                    textInputAdvanced : false,
-                    dateInput : true,
-                }
-                break;
-            
-            /*
-            **************picklist
-            */
-            case 'picklist':
-                this.picklistOptions = {
-                    picklist : true,
-                    picklist2 : false,
-                    picklist3 : false,
-                }
-                break;
-            
-            case 'picklist2':
-                this.picklistOptions = {
-                    picklist : false,
-                    picklist2 : true,
-                    picklist3 : false,
-                }
-                break;
-
-            case 'picklist3':
-                this.picklistOptions = {
-                    picklist : false,
-                    picklist2 : false,
-                    picklist3 : true,
-                }
-                break;
-            
-            /*
-             *************radio 
-             */
-            case 'radio':
-                this.radioOptions = {
-                    radio : true,
-                    radio2 : false,
-                    radio3 : false,
-                }
-                break;
-            
-            case 'radio2':
-                this.radioOptions = {
-                    radio : false,
-                    radio2 : true,
-                    radio3 : false,
-                }
-                break;
-
-            case 'radio3':
-                this.radioOptions = {
-                    radio : false,
-                    radio2 : false,
-                    radio3 : true,
-                }
-                break;
-
-            /*
-            *****************checkbox
-            */
-            case 'checkbox':
-                this.checkboxOptions = {
-                    checkbox : true,
-                    checkbox2 : false,
-                    checkbox3 : false,
-                }
-                break;
-            
-            case 'checkbox2':
-                this.checkboxOptions = {
-                    checkbox : false,
-                    checkbox2 : true,
-                    checkbox3 : false,
-                }
-                break;
-            
-            case 'checkbox3':
-                this.checkboxOptions = {
-                    checkbox : false,
-                    checkbox2 : false,
-                    checkbox3 : true,
-                }
-                break;
-        }
     }
-
+    
     handleInputBlur (e) {
         this.textValue = e.target.value;
 
@@ -289,4 +204,7 @@ export default class LwcStandardComponents extends LightningElement {
         console.log ('*** textValue : ' + this.textValue);
     }
 
+    
+
+    
 }
