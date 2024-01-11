@@ -4,7 +4,7 @@ import { subscribe, MessageContext } from 'lightning/messageService';
 
 export default class LwcStandardComponents extends LightningElement {
     @wire(MessageContext) 
-    messageContext;
+    messageContext; // lightning message service를 사용하는 ligntning web component의 정보를 제공하는 객체
 
     subscription = null;
     pageName = ''; //네비 선택시 넘어오는 페이지 값
@@ -17,13 +17,13 @@ export default class LwcStandardComponents extends LightningElement {
     }
    
     picklistOptions = {
-        picklist : true,
+        picklistBasicCombobox : true,
         picklist2 : false,
         picklist3 : false,
     }
 
     radioOptions = {
-        radio : true,
+        radioBasicRadio : true,
         radio2 : false,
         radio3 : false,
     }
@@ -37,6 +37,8 @@ export default class LwcStandardComponents extends LightningElement {
     textValue = '';
     dateValue;
     textValueField = '';
+
+    exampleOptionValue = '';
 
     inputType = true;
     picklistType = false;
@@ -57,6 +59,7 @@ export default class LwcStandardComponents extends LightningElement {
             return;
         }
 
+        // message : 구독자에게 게시된 메시지를 포함하는 직렬화 가능한 JSON 개체임 메시지에 함수나 심볼을 포함할 수 없다
         this.subscription = subscribe (this.messageContext, COMPONENT_EXAMPLE, (message) => {
             this.prevType = this.pageName;
             this.pageName = message.pageName;
@@ -91,9 +94,9 @@ export default class LwcStandardComponents extends LightningElement {
             
             case 'picklistType':
                 if (this.prevType !== 'picklistType') {
-                    this.value = 'picklist';
+                    this.value = 'picklistBasicCombobox';
                     this.picklistOptions = {
-                        picklist : true,
+                        picklistBasicCombobox : true,
                         picklist2 : false,
                         picklist3 : false,
                     }
@@ -102,9 +105,9 @@ export default class LwcStandardComponents extends LightningElement {
             
             case 'radioType':
                 if (this.prevType !== 'radioType') {
-                    this.value = 'radio';
+                    this.value = 'radioBasicRadio';
                     this.radioOptions = {
-                        radio : true,
+                        radioBasicRadio : true,
                         radio2 : false,
                         radio3 : false,
                     }
@@ -135,13 +138,13 @@ export default class LwcStandardComponents extends LightningElement {
             ];
         } else if (this.pageName === 'picklistType') {
             return [
-                {label : 'picklist', value : 'picklist'},
+                {label : 'Basic Combobox', value : 'picklistBasicCombobox'},
                 {label : 'picklist2', value : 'picklist2'},
                 {label : 'picklist3', value : 'picklist3'},
             ]
         } else if (this.pageName === 'radioType') {
             return [
-                {label : 'radio', value : 'radio'},
+                {label : 'Basic Radio', value : 'radioBasicRadio'},
                 {label : 'radio2', value : 'radio2'},
                 {label : 'radio3', value : 'radio3'},
             ]
@@ -154,20 +157,35 @@ export default class LwcStandardComponents extends LightningElement {
         }
     }
 
-    textInputDefaultValue = [
-        {id : 1, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : '', placeholder : '', required : '', disabled : '', onblur : '{handleInputBlur}'},
-        {id : 2, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : 'Input Text!', onblur : '{handleInputBlur}'},
-        {id : 3, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', placeholder : 'type here', onblur : '{handleInputBlur}'},
-        {id : 4, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', placeholder : 'type here', required : 'required', onblur : '{handleInputBlur}'},
-        {id : 5, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', placeholder : 'type here', disabled : 'disabled'},
-        {id : 6, class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : 'DK BMC', readonly : 'readonly'},
+    textInputDefaultOptions = [
+        {id : 'defaultValue1', class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : ''},
+        {id : 'defaultValue2', class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : 'Input Text!'},
+        {id : 'defaultValue3', class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : '', placeholder : 'type here'},
+        {id : 'defaultValue4', class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : '', placeholder : 'type here', required : 'required'},
+        {id : 'defaultValue5', class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : '', placeholder : 'type here', disabled : 'disabled'},
+        {id : 'defaultValue6', class : 'slds-p-around_medium lgc-bg', type : 'text', label : 'Enter some text', value : 'DK BMC', readonly : 'readonly'},
     ]; 
+
+    picklistBasicComboboxOptions = [
+        {label : 'New', value : 'new'},
+        {label : 'In Progress', value : 'inProgress'},
+        {label : 'Finished', value : 'finished'},
+    ];
+
+    radioBasicRadioOptions = [
+        {label : 'Sales', value : 'option1'},
+        {label : 'Force', value : 'option2'},
+    ]
 
 
     get exampleValue () {
         if (this.value === 'textInputDefault') {
-            return this.textInputDefaultValue;
-        } 
+            return this.textInputDefaultOptions;
+        } else if (this.value === 'picklistBasicCombobox') {
+            return this.picklistBasicComboboxOptions;
+        } else if (this.value === 'radioBasicRadio') {
+            return this.radioBasicRadioOptions;
+        }
     }
 
 // 옵션 선택시 하단 내용 변경
@@ -181,11 +199,11 @@ export default class LwcStandardComponents extends LightningElement {
 
         if(this.value === 'textInputDefault' || this.value === 'textInputAdvanced') this.textValueField = '';
 
-        this.picklistOptions.picklist = this.value === 'picklist';
+        this.picklistOptions.picklistBasicCombobox = this.value === 'picklistBasicCombobox';
         this.picklistOptions.picklist2 = this.value === 'picklist2';
         this.picklistOptions.picklist3 = this.value === 'picklist3';
 
-        this.radioOptions.radio = this.value === 'radio';
+        this.radioOptions.radioBasicRadio = this.value === 'radioBasicRadio';
         this.radioOptions.radio2 = this.value === 'radio2';
         this.radioOptions.radio3 = this.value === 'radio3';
 
@@ -194,17 +212,21 @@ export default class LwcStandardComponents extends LightningElement {
         this.checkboxOptions.checkbox3 = this.value === 'checkbox3';
         
     }
+
+    handleExampleValueChange (e) {
+        if(this.value === 'picklistBasicCombobox') {
+            this.exampleOptionValue = e.detail.value;
+        } else if (this.value === 'radioBasicRadio') {
+            this.exampleOptionValue = e.detail.value;
+        }
+    }
     
     handleInputBlur (e) {
         this.textValue = e.target.value;
 
-        if (this.textInputAdvanced) this.textValueField = this.textValue;
+        if (this.inputOptions.textInputAdvanced) this.textValueField = this.textValue;
         else this.textValueField = '';
 
         console.log ('*** textValue : ' + this.textValue);
     }
-
-    
-
-    
 }

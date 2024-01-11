@@ -30,8 +30,7 @@
                                         <lightning-input type={item.type} label={item.label} 
                                                         value={item.value} placeholder={item.placeholder} 
                                                         required={item.required} disabled={item.disabled}
-                                                        read-only={item.readonly}
-                                                        onblur={item.onblur}></lightning-input>
+                                                        read-only={item.readonly}></lightning-input>
                                     </div>
                                 </template>
                             </template>
@@ -70,8 +69,18 @@
                     <template lwc:elseif={picklistType}>
                         <div class="wrap-example">
                             <div>
-                                <template lwc:if={picklistOptions.picklist}>
-                                    <p>picklist</p>
+                                <template lwc:if={picklistOptions.picklistBasicCombobox}>
+                                    <div>
+                                        <lightning-combobox name="progress" 
+                                                            label="status"
+                                                            value={exampleOptionValue}
+                                                            placeholder="Select Progress"
+                                                            options={exampleValue}
+                                                            onchange={handleExampleValueChange}></lightning-combobox>
+                                    </div>
+                                    <div>
+                                        Selected value is : {exampleOptionValue}
+                                    </div>
                                 </template>
                                 
                                 <template lwc:elseif={picklistOptions.picklist2}>
@@ -89,8 +98,18 @@
                     <template lwc:elseif={radioType}>
                         <div class="wrap-example">
                             <div>
-                                <template lwc:if={radioOptions.radio}>
-                                    <p>radio</p>
+                                <template lwc:if={radioOptions.radioBasicRadio}>
+                                    <div>                                    
+                                        <lightning-radio-group name="radioGroup"
+                                                            label="Radio Group"
+                                                            options={exampleValue}
+                                                            value={exampleOptionValue}
+                                                            type="radio"
+                                                            onchange={handleExampleValueChange}></lightning-radio-group>
+                                    </div>
+                                    <div>
+                                        Selected value is : {exampleOptionValue}
+                                    </div>
                                 </template>
     
                                 <template lwc:elseif={radioOptions.radio2}>
